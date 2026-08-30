@@ -2,7 +2,9 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const customer_routes = require('./router/auth_users.js').authenticated;
+const users = require('./router/auth_users.js').users;
 const genl_routes = require('./router/general.js').general;
+
 
 const app = express();
 const PORT = 5000;
@@ -29,19 +31,22 @@ app.use("/customer/auth/*", function auth(req,res,next){
 app.use("/customer", customer_routes);
 app.use("/", genl_routes);
 
+
 app.post("/login", (req, res) => {
-    const user = req.body.user;
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(404).json({ message: "Username and password are required" });
+    }
+  
+    const user = users.find(u => u.username === username && u.password === password);
     if (!user) {
-        return res.status(404).json({ message: "Body Empty" });
+      return res.status(403).json({ message: "Invalid username or password" });
     }
-    let accessToken = jwt.sign({
-        data: user
-    }, 'access', { expiresIn: 60 * 60 });
-
-    req.session.authorization = {
-        accessToken
-    }
-    return res.status(200).send("User successfully logged in");
+  
+    let accessToken = jwt.sign({ data: username }, 'access', { expiresIn: 60 * 60 });
+  
+    req.session.authorization = { accessToken };
+    return res.status(200).json({ message: "User successfully logged in" });
 });
-
 app.listen(PORT, () => console.log("Server is running at port " + PORT));
