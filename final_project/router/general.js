@@ -51,7 +51,7 @@ public_users.get('/', function (req, res) {
   });
   */
 
-  /*var 3
+  //Task 10
   public_users.get('/', async function (req, res) {
     try {
       const getBooks = () => {
@@ -71,9 +71,10 @@ public_users.get('/', function (req, res) {
       res.status(404).json({ message: err });
     }
   });
-    */
-   
-  const axios = require('axios');
+
+
+  /*
+const axios = require('axios');
 
 public_users.get('/', async function (req, res) {
     try {
@@ -84,6 +85,7 @@ public_users.get('/', async function (req, res) {
       res.status(404).json({ message: err.message });
     }
   });
+  */
 
 
 
