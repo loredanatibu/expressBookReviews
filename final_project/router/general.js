@@ -108,7 +108,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
   
  */
 
-
+/*Task 3
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
@@ -121,6 +121,30 @@ public_users.get('/author/:author',function (req, res) {
   
   res.send(result);
 });
+*/
+//Task 12
+
+public_users.get('/author/:author', async function (req, res) {
+    try {
+      const getBookByauthor = (author) => {
+        return new Promise((resolve, reject) => {
+          const result = Object.values(books).find(b => b.author == author);
+          if (result) {
+            resolve(result);
+          } else {
+            reject("Books not found");
+          }
+        });
+      };
+  
+      const result = await getBookByauthor(req.params.author);
+      res.status(200).json(result);
+  
+    } catch (err) {
+      res.status(404).json({ message: err });
+    }
+  });
+
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
