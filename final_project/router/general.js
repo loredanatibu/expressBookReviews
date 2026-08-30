@@ -4,7 +4,8 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-
+//cd expressBookReviews/final_project
+// lsof -ti :5000 | xargs kill -9
 public_users.post("/register", (req,res) => {
   //Write your code here
   return res.status(300).json({message: "Yet to be implemented"});
@@ -59,7 +60,14 @@ public_users.get('/title/:title',function (req, res) {
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+  const result= Object.values(books).filter(b => b.isbn == req.params.isbn).map(r=>r.reviews);
+  
+  if (result.length === 0) {
+    return res.status(404).json({ message: "isbn not found" });
+  }
+  res.send(result);
+  
 });
 
 module.exports.general = public_users;
