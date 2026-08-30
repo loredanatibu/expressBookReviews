@@ -24,12 +24,72 @@ public_users.post("/register", (req,res) => {
   return res.status(200).json({ message: "User successfully registered" });
 });
 
+/*var 1
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
   //return res.status(300).json({message: "Yet to be implemented"});
   res.send(JSON.stringify({books},null,4));
 });
+*/
+
+/*var 2
+public_users.get('/', function (req, res) {
+    new Promise((resolve, reject) => {
+      if (books) {
+        resolve(books);
+      } else {
+        reject("Books not found");
+      }
+    })
+    .then((books) => {
+      res.status(200).json(books);
+    })
+    .catch((err) => {
+      res.status(404).json({ message: err });
+    });
+  });
+  */
+
+  /*var 3
+  public_users.get('/', async function (req, res) {
+    try {
+      const getBooks = () => {
+        return new Promise((resolve, reject) => {
+          if (books) {
+            resolve(books);
+          } else {
+            reject("Books not found");
+          }
+        });
+      };
+  
+      const result = await getBooks();
+      res.status(200).json(result);
+  
+    } catch (err) {
+      res.status(404).json({ message: err });
+    }
+  });
+    */
+   
+  const axios = require('axios');
+
+public_users.get('/', async function (req, res) {
+    try {
+      const response = await axios.get('http://localhost:5000/');
+      res.status(200).json(response.data);
+    } catch (err) {
+
+      res.status(404).json({ message: err.message });
+    }
+  });
+
+
+
+
+
+
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
