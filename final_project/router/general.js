@@ -122,11 +122,11 @@ public_users.get('/author/:author',function (req, res) {
   res.send(result);
 });
 */
-//Task 12
 
+//Task 12
 public_users.get('/author/:author', async function (req, res) {
     try {
-      const getBookByauthor = (author) => {
+      const getBookByAuthor = (author) => {
         return new Promise((resolve, reject) => {
           const result = Object.values(books).find(b => b.author == author);
           if (result) {
@@ -137,7 +137,7 @@ public_users.get('/author/:author', async function (req, res) {
         });
       };
   
-      const result = await getBookByauthor(req.params.author);
+      const result = await getBookByAuthor(req.params.author);
       res.status(200).json(result);
   
     } catch (err) {
@@ -145,7 +145,7 @@ public_users.get('/author/:author', async function (req, res) {
     }
   });
 
-
+/*task 4
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
@@ -158,6 +158,31 @@ public_users.get('/title/:title',function (req, res) {
   
   res.send(result);
 });
+*/
+
+//Task 13
+public_users.get('/title/:title', async function (req, res) {
+    try {
+      const getBookByTitle = (title) => {
+        return new Promise((resolve, reject) => {
+          const result = Object.values(books).find(b => b.title == title);
+          if (result) {
+            resolve(result);
+          } else {
+            reject("Books not found");
+          }
+        });
+      };
+  
+      const result = await getBookByTitle(req.params.title);
+      res.status(200).json(result);
+  
+    } catch (err) {
+      res.status(404).json({ message: err });
+    }
+  });
+
+
 
 /* Task 2
 //  Get book review
