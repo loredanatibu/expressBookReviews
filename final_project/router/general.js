@@ -77,7 +77,7 @@ public_users.get('/', function (req, res) {
 
 public_users.get('/', async function (req, res) {
     try {
-      const response = await axios.get('http://localhost:5000/');
+      const response = await axios.get('https://loredanatibu-5000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/');
       res.status(200).json(response.data);
     } catch (err) {
 
