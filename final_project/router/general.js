@@ -92,7 +92,7 @@ public_users.get('/', async function (req, res) {
 
 
 
-
+/* Task 2
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
@@ -106,6 +106,9 @@ public_users.get('/isbn/:isbn',function (req, res) {
   res.send(result);
  });
   
+ */
+
+
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
@@ -132,6 +135,7 @@ public_users.get('/title/:title',function (req, res) {
   res.send(result);
 });
 
+/* Task 2
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
@@ -144,5 +148,28 @@ public_users.get('/review/:isbn',function (req, res) {
   res.send(result);
   
 });
+*/
+
+// Task 11
+public_users.get('/isbn/:isbn', async function (req, res) {
+    try {
+      const getBookByIsbn = (isbn) => {
+        return new Promise((resolve, reject) => {
+          const book = Object.values(books).find(b => b.isbn == isbn);
+          if (book) {
+            resolve(book);
+          } else {
+            reject("Book not found");
+          }
+        });
+      };
+  
+      const result = await getBookByIsbn(req.params.isbn);
+      res.status(200).json(result);
+  
+    } catch (err) {
+      res.status(404).json({ message: err });
+    }
+  });
 
 module.exports.general = public_users;
